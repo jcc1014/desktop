@@ -5,8 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -19,7 +17,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 public class HttpUtils {
@@ -61,6 +59,12 @@ public class HttpUtils {
 	    }  
 	    return resData;  
 	}  
+	
+	public static JSONArray getTableData(String type,String dateTime,String name){
+		
+		return null;
+	}
+	
 	
 	public static void main(String[] args) {
 		String username = "lsx";

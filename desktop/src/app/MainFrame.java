@@ -19,6 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
+import javax.swing.ListSelectionModel;
 
 public class MainFrame extends JFrame {
 
@@ -51,6 +53,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setTitle("蔬菜管理系统");
 		setAlwaysOnTop(true);
 		setForeground(SystemColor.inactiveCaptionBorder);
 		setFont(new Font("Dialog", Font.PLAIN, 16));
@@ -59,6 +62,7 @@ public class MainFrame extends JFrame {
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		
 		JMenuBar menuBar = new JMenuBar();
+		menuBar.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 24));
 		setJMenuBar(menuBar);
 		
 		JMenu menu = new JMenu("操作");
@@ -107,22 +111,26 @@ public class MainFrame extends JFrame {
 		mainPane.add(btn_next);*/
 		
 		JLabel label = new JLabel("日期");
-		label.setBounds(15, 25, 44, 21);
+		label.setFont(new Font("宋体", Font.PLAIN, 24));
+		label.setBounds(30, 25, 60, 35);
 		mainPane.add(label);
 		
 		textField = new JTextField();
-		textField.setBounds(57, 22, 123, 27);
+		textField.setFont(new Font("宋体", Font.PLAIN, 24));
+		textField.setBounds(95, 25, 170, 35);
 		mainPane.add(textField);
 		textField.setColumns(10);
 		
 		JLabel label_1 = new JLabel("名称");
-		label_1.setBounds(202, 25, 44, 21);
+		label_1.setFont(new Font("宋体", Font.PLAIN, 24));
+		label_1.setBounds(285, 25, 60, 35);
 		mainPane.add(label_1);
 		
 		textField_1 = new JTextField();
+		textField_1.setFont(new Font("宋体", Font.PLAIN, 24));
 		textField_1.setText(LoginState.baseid);;
 		textField_1.setColumns(10);
-		textField_1.setBounds(250, 22, 123, 27);
+		textField_1.setBounds(350, 25, 170, 35);
 		mainPane.add(textField_1);
 		
 		 Object[][] tableData =
@@ -132,28 +140,40 @@ public class MainFrame extends JFrame {
 			  //定义一维数据作为列标题
 		 Object[] columnTitle = {"识别码" , "货号" , "名称","单价（元/kg）","总量","余量","日期","操作"};
 		table = new JTable(tableData , columnTitle);
+		table.setFont(new Font("宋体", Font.PLAIN, 24));
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setFillsViewportHeight(true);
 		table.setPreferredScrollableViewportSize(new Dimension(1300, 600));// 表格的显示尺寸
 		table.setBackground(Color.WHITE);
-		table.setRowHeight(25);
+		table.setRowHeight(35);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setEnabled(false);
+		//设置表头
+		JTableHeader header=table.getTableHeader();
+        header.setFont(new Font("宋体",Font.PLAIN,32));             //字体
+        header.setPreferredSize(new Dimension(header.getWidth(),36));
+        //滚动面板
 		JScrollPane scrollPane=new JScrollPane(table); 
 		scrollPane.setLocation(30, 70);
-		scrollPane.setSize(1300, 600);
+		//设置高度
+		int w = ScreenSize.getScreenWidth()-60;
+		int h = ScreenSize.getScreenHeight()-220;
+		scrollPane.setSize(w, h);
 		scrollPane.setViewportBorder(null);
 		mainPane.add(scrollPane);
 		
 		JButton button = new JButton("搜索");
-		button.setBounds(416, 22, 93, 27);
+		button.setFont(new Font("宋体", Font.PLAIN, 24));
+		button.setBounds(589, 22, 93, 37);
 		mainPane.add(button);
 		
 		JButton button_1 = new JButton("下架");
+		button_1.setFont(new Font("宋体", Font.PLAIN, 24));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		button_1.setBounds(541, 22, 93, 27);
+		button_1.setBounds(735, 22, 93, 37);
 		mainPane.add(button_1);
 	}
 	
