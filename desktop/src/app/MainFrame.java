@@ -19,6 +19,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.ListSelectionModel;
 
@@ -194,5 +195,20 @@ public class MainFrame extends JFrame {
 		if(!main2.isActive()){
 			main2.setVisible(true);
 		}
+	}
+	
+	public static void clearTable(JTable table){
+		DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+		tableModel.setRowCount(0);// 清除原有行
+	}
+	
+	public static void deleteRow(JTable table,int rowIndex){
+		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+		tableModel.removeRow(rowIndex);// rowIndex是要删除的行序号
+	}
+	
+	public static void addRow(JTable table,Object[] rowData){
+		DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+		tableModel.addRow(rowData);
 	}
 }
