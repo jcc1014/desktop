@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import com.alibaba.fastjson.JSONObject;
+import java.awt.Window.Type;
 
 public class MainFrame2 extends JFrame {
 
@@ -61,6 +62,7 @@ public class MainFrame2 extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame2() {
+		setType(Type.UTILITY);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("蔬菜管理系统");
 		setForeground(SystemColor.inactiveCaptionBorder);
@@ -113,8 +115,6 @@ public class MainFrame2 extends JFrame {
 		
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("宋体", Font.PLAIN, 24));
-		textField_1.setText(LoginState.baseid);;
-		textField_1.setColumns(10);
 		textField_1.setBounds(119, 25, 263, 35);
 		mainPane.add(textField_1);
 		
@@ -162,7 +162,9 @@ public class MainFrame2 extends JFrame {
 		button.setBounds(430, 24, 93, 37);
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+				tableModel.setRowCount(0);
+				OperationUtils.addTableData(table, "localhost", "未上架", "0", textField_1.getText());
 			}
 		});
 		mainPane.add(button);
@@ -228,6 +230,7 @@ public class MainFrame2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
+				OperationUtils.addTableData(table, "localhost", "未上架", "0", "");
 			}
 		});
 		button_3.setFont(new Font("宋体", Font.PLAIN, 24));
@@ -241,7 +244,7 @@ public class MainFrame2 extends JFrame {
 	
 	public void sj(){
 		this.dispose();
-		JFrame main = new MainFrame2();
+		JFrame main = new MainFrame();
 		if(!main.isActive()){
 			main.setVisible(true);
 		}

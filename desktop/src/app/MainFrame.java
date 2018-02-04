@@ -26,9 +26,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import java.awt.Window.Type;
 
 public class MainFrame extends JFrame {
 
@@ -61,6 +59,7 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setType(Type.UTILITY);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("蔬菜管理系统");
 		setForeground(SystemColor.inactiveCaptionBorder);
@@ -113,8 +112,6 @@ public class MainFrame extends JFrame {
 		
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("宋体", Font.PLAIN, 24));
-		textField_1.setText(LoginState.baseid);;
-		textField_1.setColumns(10);
 		textField_1.setBounds(119, 25, 263, 35);
 		mainPane.add(textField_1);
 		
@@ -157,6 +154,13 @@ public class MainFrame extends JFrame {
 		mainPane.add(scrollPane);
 		
 		JButton button = new JButton("搜索");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+				tableModel.setRowCount(0);
+				OperationUtils.addTableData(table, "localhost", "已上架", "1", textField_1.getText());
+			}
+		});
 		button.setFont(new Font("宋体", Font.PLAIN, 24));
 		button.setBounds(430, 24, 93, 37);
 		mainPane.add(button);
@@ -202,6 +206,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
+				OperationUtils.addTableData(table, "localhost", "已上架", "1", "");
 			}
 		});
 		button_3.setFont(new Font("宋体", Font.PLAIN, 24));

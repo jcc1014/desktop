@@ -52,11 +52,12 @@ public class Frame extends JFrame {
 	 * Create the frame.
 	 */
 	public Frame() {
+		setAlwaysOnTop(true);
 		setType(Type.UTILITY);
 		setTitle("登录");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds((ScreenSize.getScreenWidth()-450)/2, (ScreenSize.getScreenHeight()-300)/2, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -104,7 +105,7 @@ public class Frame extends JFrame {
 					dialog.setLocationRelativeTo(contentPane);
 					JLabel label = new JLabel();
 					label.setText(js.get("msg").toString());
-					dialog.add(label);
+					dialog.getContentPane().add(label);
 					dialog.setVisible(true);
 				}
 			}
@@ -121,6 +122,8 @@ public class Frame extends JFrame {
 		JButton clear = new JButton("清空");
 		clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				username.setText("");
+				password.setText("");
 			}
 		});
 		clear.setFont(new Font("宋体", Font.PLAIN, 20));
