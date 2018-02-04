@@ -4,11 +4,15 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -18,10 +22,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.ListSelectionModel;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 
 public class MainFrame extends JFrame {
 
@@ -30,9 +37,9 @@ public class MainFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel mainPane;
-	private JTextField textField;
 	private JTextField textField_1;
 	private JTable table;
+	private int rowI = -1;
 
 	/**
 	 * Launch the application.
@@ -54,13 +61,11 @@ public class MainFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public MainFrame() {
+		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setTitle("蔬菜管理系统");
-		setAlwaysOnTop(true);
 		setForeground(SystemColor.inactiveCaptionBorder);
 		setFont(new Font("Dialog", Font.PLAIN, 16));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 835, 546);
-		setExtendedState(Frame.MAXIMIZED_BOTH);
 		
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 24));
@@ -101,46 +106,34 @@ public class MainFrame extends JFrame {
 		setContentPane(mainPane);
 		mainPane.setLayout(null);
 		
-		/*JButton btn_prev = new JButton("上一页");
-		btn_prev.setBackground(SystemColor.textHighlight);
-		btn_prev.setBounds(15, 431, 123, 29);
-		mainPane.add(btn_prev);
-		
-		JButton btn_next = new JButton("下一页");
-		btn_next.setBackground(SystemColor.textHighlight);
-		btn_next.setBounds(154, 431, 123, 29);
-		mainPane.add(btn_next);*/
-		
-		JLabel label = new JLabel("日期");
+		JLabel label = new JLabel("名称");
 		label.setFont(new Font("宋体", Font.PLAIN, 24));
 		label.setBounds(30, 25, 60, 35);
 		mainPane.add(label);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("宋体", Font.PLAIN, 24));
-		textField.setBounds(95, 25, 170, 35);
-		mainPane.add(textField);
-		textField.setColumns(10);
-		
-		JLabel label_1 = new JLabel("名称");
-		label_1.setFont(new Font("宋体", Font.PLAIN, 24));
-		label_1.setBounds(285, 25, 60, 35);
-		mainPane.add(label_1);
 		
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("宋体", Font.PLAIN, 24));
 		textField_1.setText(LoginState.baseid);;
 		textField_1.setColumns(10);
-		textField_1.setBounds(350, 25, 170, 35);
+		textField_1.setBounds(119, 25, 263, 35);
 		mainPane.add(textField_1);
 		
-		 Object[][] tableData =
-			  {
-			    new Object[]{"1111","10001" ,"苹果", 1.8,100,20 , "2018-02-01","下架"},
+		 Object[][] tableData ={
+			    /*new Object[]{"1111","10001" ,"苹果", 1.8,100,20 , "2018-02-01","下架"},*/
 			  };
-			  //定义一维数据作为列标题
-		 Object[] columnTitle = {"识别码" , "货号" , "名称","单价（元/kg）","总量","余量","日期","操作"};
-		table = new JTable(tableData , columnTitle);
+		 //定义一维数据作为列标题
+		 Object[] columnTitle = {"编号" , "货号" , "名称","单价（元/kg）","总量","余量","日期","操作"};
+		 table = new JTable(new DefaultTableModel(tableData , columnTitle));
+		 OperationUtils.addTableData(table, "localhost", "已上架", "1", "");
+		 table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				rowI = table.rowAtPoint(e.getPoint());
+				table.addRowSelectionInterval(rowI,rowI);
+				table.setSelectionBackground(Color.GRAY);
+			}
+
+		});
 		table.setFont(new Font("宋体", Font.PLAIN, 24));
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setFillsViewportHeight(true);
@@ -165,17 +158,55 @@ public class MainFrame extends JFrame {
 		
 		JButton button = new JButton("搜索");
 		button.setFont(new Font("宋体", Font.PLAIN, 24));
-		button.setBounds(589, 22, 93, 37);
+		button.setBounds(430, 24, 93, 37);
 		mainPane.add(button);
 		
-		JButton button_1 = new JButton("下架");
+		JButton button_1 = new JButton("清空");
 		button_1.setFont(new Font("宋体", Font.PLAIN, 24));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				table.setSelectionBackground(Color.WHITE);
+				table.clearSelection();
 			}
 		});
-		button_1.setBounds(735, 22, 93, 37);
+		button_1.setBounds(570, 24, 93, 37);
 		mainPane.add(button_1);
+		
+		JButton button_2 = new JButton("下架");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int[] selRowIndexs = table.getSelectedRows();// 用户所选行的序列
+				if(selRowIndexs.length>0){
+					for (int i = 0; i < selRowIndexs.length; i++) {
+						System.out.println(selRowIndexs[i]);
+					}
+				}else{
+					JDialog dialog = new JDialog();
+					dialog.setAlwaysOnTop(true);
+					dialog.setSize(300, 200);
+					dialog.setLocationRelativeTo(mainPane);
+					JLabel label = new JLabel();
+					label.setText("请至少选择一行再操作!");
+					label.setFont(new Font("宋体",Font.PLAIN,24)); ;
+					dialog.getContentPane().add(label);
+					dialog.setVisible(true);
+				}
+			}
+		});
+		button_2.setFont(new Font("宋体", Font.PLAIN, 24));
+		button_2.setBounds(707, 24, 93, 37);
+		mainPane.add(button_2);
+		
+		JButton button_3 = new JButton("刷新");
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
+				tableModel.setRowCount(0);
+			}
+		});
+		button_3.setFont(new Font("宋体", Font.PLAIN, 24));
+		button_3.setBounds(840, 24, 93, 37);
+		mainPane.add(button_3);
 	}
 	
 	public void closeFrame(){
@@ -197,18 +228,4 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
-	public static void clearTable(JTable table){
-		DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
-		tableModel.setRowCount(0);// 清除原有行
-	}
-	
-	public static void deleteRow(JTable table,int rowIndex){
-		DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
-		tableModel.removeRow(rowIndex);// rowIndex是要删除的行序号
-	}
-	
-	public static void addRow(JTable table,Object[] rowData){
-		DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
-		tableModel.addRow(rowData);
-	}
 }

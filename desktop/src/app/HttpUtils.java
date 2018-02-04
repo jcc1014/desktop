@@ -32,7 +32,7 @@ public class HttpUtils {
 	    try {  
 	        uefEntity = new UrlEncodedFormEntity(formparams, "UTF-8");  
 	        httppost.setEntity(uefEntity);  
-	        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(2000).setConnectTimeout(2000).build();//设置请求和传输超时时间  
+	        RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(20000).setConnectTimeout(20000).build();//设置请求和传输超时时间  
 	        httppost.setConfig(requestConfig);  
 	        CloseableHttpResponse response = httpclient.execute(httppost);  
 	        try {  
@@ -59,11 +59,6 @@ public class HttpUtils {
 	    }  
 	    return resData;  
 	}  
-	
-	public static JSONArray getTableData(String type,String dateTime,String name){
-		
-		return null;
-	}
 	
 	
 	public static void main(String[] args) {
