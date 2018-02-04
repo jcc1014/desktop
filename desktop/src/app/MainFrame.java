@@ -122,7 +122,7 @@ public class MainFrame extends JFrame {
 		 //定义一维数据作为列标题
 		 Object[] columnTitle = {"编号" , "货号" , "名称","单价（元/kg）","总量","余量","日期","操作"};
 		 table = new JTable(new DefaultTableModel(tableData , columnTitle));
-		 OperationUtils.addTableData(table, "qianzhide.net", "已上架", "1", "");
+		 OperationUtils.addTableData(table, LoginState.ip, "已上架", "1", "");
 		 table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -159,7 +159,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "qianzhide.net", "已上架", "1", textField_1.getText());
+				OperationUtils.addTableData(table, LoginState.ip, "已上架", "1", textField_1.getText());
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 24));
@@ -195,7 +195,7 @@ public class MainFrame extends JFrame {
 						content+="\r\n";
 						tableModel.removeRow(selRowIndexs[i]);// rowIndex是要删除的行序号
 					}
-					JSONObject js = OperationUtils.putOff(ids, "qianzhide.net");
+					JSONObject js = OperationUtils.putOff(ids, LoginState.ip);
 					if(js.get("code").equals("success")){
 						//上传称
 						String path = "C:/del_"+DateUtils.getCurrentDate("yyyyMMddHHmmss")+".txt";
@@ -232,7 +232,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "qianzhide.net", "已上架", "1", "");
+				OperationUtils.addTableData(table, LoginState.ip, "已上架", "1", "");
 			}
 		});
 		button_3.setFont(new Font("宋体", Font.PLAIN, 24));

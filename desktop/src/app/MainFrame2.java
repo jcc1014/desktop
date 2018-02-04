@@ -123,7 +123,7 @@ public class MainFrame2 extends JFrame {
 			  //定义一维数据作为列标题
 		 Object[] columnTitle = {"编号" , "货号" , "名称","单价（元/kg）","总量","余量","日期","状态"};
 		 table = new JTable(new DefaultTableModel(tableData , columnTitle));
-		 OperationUtils.addTableData(table, "qianzhide.net", "未上架", "0", "");
+		 OperationUtils.addTableData(table, LoginState.ip, "未上架", "0", "");
 		 table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -162,7 +162,7 @@ public class MainFrame2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "qianzhide.net", "未上架", "0", textField_1.getText());
+				OperationUtils.addTableData(table, LoginState.ip, "未上架", "0", textField_1.getText());
 			}
 		});
 		mainPane.add(button);
@@ -195,7 +195,7 @@ public class MainFrame2 extends JFrame {
 						content+="\r\n";
 					}
 					System.out.println(ids);
-					JSONObject js = OperationUtils.putOn(ids, "qianzhide.net");
+					JSONObject js = OperationUtils.putOn(ids, LoginState.ip);
 					if(js.get("code").equals("success")){
 						//上传称
 						String path = "C://add_"+DateUtils.getCurrentDate("yyyyMMddHHmmss")+".txt";
@@ -232,7 +232,7 @@ public class MainFrame2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "qianzhide.net", "未上架", "0", "");
+				OperationUtils.addTableData(table, LoginState.ip, "未上架", "0", "");
 			}
 		});
 		button_3.setFont(new Font("宋体", Font.PLAIN, 24));

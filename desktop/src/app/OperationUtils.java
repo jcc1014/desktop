@@ -44,7 +44,7 @@ public class OperationUtils {
 	}
 	
 	public static void main(String[] args) {
-		JSONArray ja = getTableData("localhost", "a917bda3d1284f6a9174b0a8c6f16833", "0", "");
+		JSONArray ja = getTableData(LoginState.ip, "a917bda3d1284f6a9174b0a8c6f16833", "0", "");
 		for (int i = 0; i < ja.size(); i++) {
 			System.out.println(ja.get(i).toString());
 		}

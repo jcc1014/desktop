@@ -82,7 +82,7 @@ public class Frame extends JFrame {
 		JButton login = new JButton("登录");
 		login.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String url = "http://localhost:8080/trace_system/baseInfo/syncLogin.do";
+				String url = "http://"+LoginState.ip+":8080/trace_system/baseInfo/syncLogin.do";
 				String name =  username.getText();
 				String pwd = new String(password.getPassword());
 				List<NameValuePair> formparams = new ArrayList<NameValuePair>();  

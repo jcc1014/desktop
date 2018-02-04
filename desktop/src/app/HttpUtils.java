@@ -63,7 +63,7 @@ public class HttpUtils {
 	public static void main(String[] args) {
 		String username = "lsx";
 		String password = "000000"; 
-		String url = "http://localhost:8080/trace_system/baseInfo/syncLogin.do";
+		String url = "http://"+LoginState.ip+":8080/trace_system/baseInfo/syncLogin.do";
 		List<NameValuePair> formparams = new ArrayList<NameValuePair>();  
 	    formparams.add(new BasicNameValuePair("username", username));  
 	    formparams.add(new BasicNameValuePair("password", password));
