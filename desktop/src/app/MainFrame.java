@@ -68,7 +68,7 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
-		menuBar.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 24));
+		menuBar.setFont(new Font("Microsoft YaHei UI", Font.PLAIN,18));
 		setJMenuBar(menuBar);
 		
 		JMenu menu = new JMenu("操作");
@@ -107,12 +107,12 @@ public class MainFrame extends JFrame {
 		mainPane.setLayout(null);
 		
 		JLabel label = new JLabel("名称");
-		label.setFont(new Font("宋体", Font.PLAIN, 24));
+		label.setFont(new Font("宋体", Font.PLAIN, 18));
 		label.setBounds(30, 25, 60, 35);
 		mainPane.add(label);
 		
 		textField_1 = new JTextField();
-		textField_1.setFont(new Font("宋体", Font.PLAIN, 24));
+		textField_1.setFont(new Font("宋体", Font.PLAIN, 18));
 		textField_1.setBounds(119, 25, 263, 35);
 		mainPane.add(textField_1);
 		
@@ -132,17 +132,17 @@ public class MainFrame extends JFrame {
 			}
 
 		});
-		table.setFont(new Font("宋体", Font.PLAIN, 24));
+		table.setFont(new Font("宋体", Font.PLAIN, 18));
 		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.setFillsViewportHeight(true);
 		table.setPreferredScrollableViewportSize(new Dimension(1300, 600));// 表格的显示尺寸
 		table.setBackground(Color.WHITE);
-		table.setRowHeight(35);
+		table.setRowHeight(24);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setEnabled(false);
 		//设置表头
 		JTableHeader header=table.getTableHeader();
-        header.setFont(new Font("宋体",Font.PLAIN,32));             //字体
+        header.setFont(new Font("宋体",Font.PLAIN,20));             //字体
         header.setPreferredSize(new Dimension(header.getWidth(),36));
         //滚动面板
 		JScrollPane scrollPane=new JScrollPane(table); 
@@ -162,12 +162,12 @@ public class MainFrame extends JFrame {
 				OperationUtils.addTableData(table, LoginState.ip, "已上架", "1", textField_1.getText());
 			}
 		});
-		button.setFont(new Font("宋体", Font.PLAIN, 24));
+		button.setFont(new Font("宋体", Font.PLAIN, 18));
 		button.setBounds(430, 24, 93, 37);
 		mainPane.add(button);
 		
 		JButton button_1 = new JButton("清空");
-		button_1.setFont(new Font("宋体", Font.PLAIN, 24));
+		button_1.setFont(new Font("宋体", Font.PLAIN, 18));
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				table.setSelectionBackground(Color.WHITE);
@@ -217,13 +217,13 @@ public class MainFrame extends JFrame {
 					dialog.setLocationRelativeTo(mainPane);
 					JLabel label = new JLabel();
 					label.setText("请至少选择一行再操作!");
-					label.setFont(new Font("宋体",Font.PLAIN,24)); ;
+					label.setFont(new Font("宋体",Font.PLAIN,18)); ;
 					dialog.getContentPane().add(label);
 					dialog.setVisible(true);
 				}
 			}
 		});
-		button_2.setFont(new Font("宋体", Font.PLAIN, 24));
+		button_2.setFont(new Font("宋体", Font.PLAIN, 18));
 		button_2.setBounds(707, 24, 93, 37);
 		mainPane.add(button_2);
 		
@@ -235,7 +235,7 @@ public class MainFrame extends JFrame {
 				OperationUtils.addTableData(table, LoginState.ip, "已上架", "1", "");
 			}
 		});
-		button_3.setFont(new Font("宋体", Font.PLAIN, 24));
+		button_3.setFont(new Font("宋体", Font.PLAIN, 18));
 		button_3.setBounds(840, 24, 93, 37);
 		mainPane.add(button_3);
 	}
@@ -265,7 +265,7 @@ public class MainFrame extends JFrame {
 		dialog.setLocationRelativeTo(mainPane);
 		JLabel label = new JLabel();
 		label.setText(text);
-		label.setFont(new Font("宋体",Font.PLAIN,24)); ;
+		label.setFont(new Font("宋体",Font.PLAIN,18)); ;
 		dialog.getContentPane().add(label);
 		dialog.setVisible(true);
 	}
