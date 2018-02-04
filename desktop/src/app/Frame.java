@@ -101,7 +101,7 @@ public class Frame extends JFrame {
 				}else{
 					JDialog dialog = new JDialog();
 					dialog.setAlwaysOnTop(true);
-					dialog.setSize(150, 150);
+					dialog.setSize(300, 150);
 					dialog.setLocationRelativeTo(contentPane);
 					JLabel label = new JLabel();
 					label.setText(js.get("msg").toString());
