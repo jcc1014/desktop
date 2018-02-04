@@ -10,7 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.UUID;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -29,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 import com.alibaba.fastjson.JSONObject;
-import java.awt.Window.Type;
 
 public class MainFrame2 extends JFrame {
 
@@ -123,9 +121,9 @@ public class MainFrame2 extends JFrame {
 			    //new Object[]{"0523b8777a4349358648ecc700f46501","10003" ,"黄豆芽", 1.1,25,25 , "2017-11-26","新货"},
 			  };
 			  //定义一维数据作为列标题
-		 Object[] columnTitle = {"识别码" , "货号" , "名称","单价（元/kg）","总量","余量","日期","状态"};
+		 Object[] columnTitle = {"编号" , "货号" , "名称","单价（元/kg）","总量","余量","日期","状态"};
 		 table = new JTable(new DefaultTableModel(tableData , columnTitle));
-		 OperationUtils.addTableData(table, "localhost", "未上架", "0", "");
+		 OperationUtils.addTableData(table, "qianzhide.net", "未上架", "0", "");
 		 table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -164,7 +162,7 @@ public class MainFrame2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "localhost", "未上架", "0", textField_1.getText());
+				OperationUtils.addTableData(table, "qianzhide.net", "未上架", "0", textField_1.getText());
 			}
 		});
 		mainPane.add(button);
@@ -197,14 +195,18 @@ public class MainFrame2 extends JFrame {
 						content+="\r\n";
 					}
 					System.out.println(ids);
-					JSONObject js = OperationUtils.putOn(ids, "localhost");
+					JSONObject js = OperationUtils.putOn(ids, "qianzhide.net");
 					if(js.get("code").equals("success")){
 						//上传称
-						String path = "C:/Users/jingcc/Desktop/"+UUID.randomUUID().toString().replace("-", "")+".txt";
+						String path = "C://add_"+DateUtils.getCurrentDate("yyyyMMddHHmmss")+".txt";
 						FileUtils.createFile(path, content);
 						//删除数据
-						
-						showMsg("上架成功!");
+						String rs = Command.upCommand("192.168.1.87", path);
+						if(rs.indexOf("Complete")>-1){
+							showMsg("上架成功!");
+						}else{
+							showMsg("上架失败!");
+						}
 					}else{
 						showMsg("上架失败!");
 					}
@@ -230,7 +232,7 @@ public class MainFrame2 extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "localhost", "未上架", "0", "");
+				OperationUtils.addTableData(table, "qianzhide.net", "未上架", "0", "");
 			}
 		});
 		button_3.setFont(new Font("宋体", Font.PLAIN, 24));

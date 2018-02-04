@@ -26,7 +26,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import java.awt.Window.Type;
+
+import com.alibaba.fastjson.JSONObject;
 
 public class MainFrame extends JFrame {
 
@@ -121,7 +122,7 @@ public class MainFrame extends JFrame {
 		 //定义一维数据作为列标题
 		 Object[] columnTitle = {"编号" , "货号" , "名称","单价（元/kg）","总量","余量","日期","操作"};
 		 table = new JTable(new DefaultTableModel(tableData , columnTitle));
-		 OperationUtils.addTableData(table, "localhost", "已上架", "1", "");
+		 OperationUtils.addTableData(table, "qianzhide.net", "已上架", "1", "");
 		 table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -158,7 +159,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "localhost", "已上架", "1", textField_1.getText());
+				OperationUtils.addTableData(table, "qianzhide.net", "已上架", "1", textField_1.getText());
 			}
 		});
 		button.setFont(new Font("宋体", Font.PLAIN, 24));
@@ -179,10 +180,35 @@ public class MainFrame extends JFrame {
 		JButton button_2 = new JButton("下架");
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 				int[] selRowIndexs = table.getSelectedRows();// 用户所选行的序列
+				String ids = "";
+				String content = "ID	ItemCode	DepartmentID	GroupID	Name1	Name2	Name3	Price	UnitID	BarcodeType1	BarcodeType2	Label1ID	Label2ID	ProducedDate	FreshnessDate	ValidDate	PackageType	PackageWeight	PackagePrice	PackageRange	PackageDays	PackageHours	Text1ID	Text2ID	Text3ID	Text4ID	Text5ID	Text6ID	Text7ID	Text8ID	DiscountID	DiscountRate	HalfDiscount	QuarterDiscount	TareID	TareValue	IceID	ICEValue	OriginID	TraceabilityID	LimitPrice	Tax1	Tax2	Tax3	Tax4	Flag1	Flag2	Flag3	ProducedDateRule	FreshnessDateFrom	ValidDateFrom	PackageDateFrom	SpeedCode	Position1	SalesCategory	DiscountBeginTime	DiscountEndTime	DiscountPrice	DiscountFlag	Message1	UnitPrintName	";
+				content +="\r\n";
 				if(selRowIndexs.length>0){
 					for (int i = 0; i < selRowIndexs.length; i++) {
 						System.out.println(selRowIndexs[i]);
+						ids+=table.getValueAt(i, 0)+",";
+						content += table.getValueAt(i, 1)+"	"+table.getValueAt(i, 1)+"	"+
+						"22	0	"+table.getValueAt(i, 2)+"	"+table.getValueAt(i, 0)+"		"+table.getValueAt(i, 3)+
+						"	4	2	0	0	0	1899-12-30	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0		0	0	0	0	0	0	0	0	0	0	0	0	PG	0		1899-12-30	1899-12-30	0	0	0		";
+						content+="\r\n";
+						tableModel.removeRow(selRowIndexs[i]);// rowIndex是要删除的行序号
+					}
+					JSONObject js = OperationUtils.putOff(ids, "qianzhide.net");
+					if(js.get("code").equals("success")){
+						//上传称
+						String path = "C:/del_"+DateUtils.getCurrentDate("yyyyMMddHHmmss")+".txt";
+						FileUtils.createFile(path, content);
+						//删除数据
+						String rs = Command.delCommand("192.168.1.87", path);
+						if(rs.indexOf("Complete")>-1){
+							showMsg("下架成功!");
+						}else{
+							showMsg("下架失败!");
+						}
+					}else{
+						showMsg("下架失败!");
 					}
 				}else{
 					JDialog dialog = new JDialog();
@@ -206,7 +232,7 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 				tableModel.setRowCount(0);
-				OperationUtils.addTableData(table, "localhost", "已上架", "1", "");
+				OperationUtils.addTableData(table, "qianzhide.net", "已上架", "1", "");
 			}
 		});
 		button_3.setFont(new Font("宋体", Font.PLAIN, 24));
@@ -232,5 +258,15 @@ public class MainFrame extends JFrame {
 			main2.setVisible(true);
 		}
 	}
-	
+	public void showMsg(String text){
+		JDialog dialog = new JDialog();
+		dialog.setAlwaysOnTop(true);
+		dialog.setSize(300, 200);
+		dialog.setLocationRelativeTo(mainPane);
+		JLabel label = new JLabel();
+		label.setText(text);
+		label.setFont(new Font("宋体",Font.PLAIN,24)); ;
+		dialog.getContentPane().add(label);
+		dialog.setVisible(true);
+	}
 }

@@ -36,13 +36,19 @@ public class Command {
   
     public static String upCommand(String ip,String path){
     	//path = "C:/Users/jingcc/Desktop/电子 秤/PLU.txt";
-    	String commandStr = "AclasSDKCOnsole.exe -h "+ip+" -t Down -n \""+path+"\" -b PLU";
+    	String commandStr = "cd c:\\&&AclasSDKCOnsole.exe -h "+ip+" -t Down -n \""+path+"\" -b PLU";
+    	String rs = exeCmd(commandStr);
+    	return rs;
+    }
+    public static String delCommand(String ip,String path){
+    	//path = "C:/Users/jingcc/Desktop/电子 秤/PLU.txt";
+    	String commandStr = "cd c:\\&&AclasSDKCOnsole.exe -h "+ip+" -t Del -n \""+path+"\" -b PLU";
     	String rs = exeCmd(commandStr);
     	return rs;
     }
     public static String downCommand(String ip,String path){
     	//path = "C:/Users/jingcc/Desktop/电子 秤/PLU.txt";
-    	String commandStr = "AclasSDKCOnsole.exe -h "+ip+" -t UP -n \""+path+"\" -b PLU -f Unicode";
+    	String commandStr = "cd c:\\&&AclasSDKCOnsole.exe -h "+ip+" -t UP -n \""+path+"\" -b PLU -f Unicode";
     	String rs = exeCmd(commandStr);
     	return rs;
     }
