@@ -198,7 +198,7 @@ public class MainFrame2 extends JFrame {
 					JSONObject js = OperationUtils.putOn(ids, LoginState.ip);
 					if(js.get("code").equals("success")){
 						//上传称
-						String path = "C://add_"+DateUtils.getCurrentDate("yyyyMMddHHmmss")+".txt";
+						String path = "D://add_"+DateUtils.getCurrentDate("yyyyMMddHHmmss")+".txt";
 						FileUtils.createFile(path, content);
 						//删除数据
 						String rs = Command.upCommand("192.168.1.87", path);
