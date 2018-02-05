@@ -56,7 +56,7 @@ public class OperationUtils {
 			 DefaultTableModel tableModel = (DefaultTableModel)table.getModel();
 			 for (int i = 0; i < ja.size(); i++) {
 				 JSONObject js = JSONObject.parseObject(ja.get(i).toString());
-				 tableModel.addRow(new Object[]{js.get("hh"),js.get("hh") ,js.get("kind"),js.get("price"),
+				 tableModel.addRow(new Object[]{js.get("distribution_id"),js.get("hh") ,js.get("kind"),js.get("price"),
 						 js.get("yps"),js.get("yps") ,js.get("createtime"),state});
 			}
 		 }
